@@ -13,7 +13,7 @@ Uses 3-legged oAuth2 with implicit grant to authenticate with aps.
 
 ### Pre-requisites
 
-- Autodesk Platform Services Account: Learn how to create a aps Account, activate subscription and create an app at [this tutorial](https://forge-tutorials.autodesk.io/tutorials/dashboard/)
+- Autodesk Platform Services Account: Learn how to create a aps Account, activate subscription and create an app at [this tutorial](https://forge-tutorials.autodesk.io/)
 
 - Visual Studio Code
 
@@ -25,7 +25,7 @@ Uses 3-legged oAuth2 with implicit grant to authenticate with aps.
 
 ### Setup
 
-- Create a [Autodesk Platform Services app](https://forge-tutorials.autodesk.io/tutorials/dashboard/) with access to the Premium Reporting API.
+- Create a [Autodesk Platform Services app](https://forge-tutorials.autodesk.io/) with access to the Premium Reporting API.
 
 - Take note of the Client ID which you need to enter as soon as you login.
 
