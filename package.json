@@ -1,0 +1,26 @@
+{
+  "name": "forge-premium-report",
+  "version": "1.0.0",
+  "description": "This web application helps viewing and exporting usage data  in the form of tables,charts from Premium Reporting APIs.",
+  "main": "convert.js",
+  "scripts": {
+    "deploy": "gh-pages -d dist1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/autodesk-platform-services/aps-premium-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/autodesk-platform-services/aps-premium-report/issues"
+  },
+  "homepage": "https://github.com/autodesk-platform-services/aps-premium-report#readme",
+  "dependencies": {
+    "gh-pages": "^4.0.0"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1"
+  }
+}
