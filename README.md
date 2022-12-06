@@ -9,7 +9,7 @@ The sample helps viewing, building custom reports and exporting usage query & ex
 
 Uses 3-legged oAuth2 with implicit grant to authenticate with aps.
 
-![1663190060688](thumbnail.PNG)
+![thumbnail](thumbnail.PNG)
 
 ### Pre-requisites
 
