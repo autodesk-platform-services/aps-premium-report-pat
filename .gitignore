@@ -8,6 +8,7 @@ all.csv
 metadata.json
 index1.html
 index2.html
+package-lock.json
 logs
 *.log
 npm-debug.log*
