@@ -4,7 +4,7 @@
   "description": "This web application helps viewing and exporting usage data  in the form of tables,charts from Premium Reporting APIs.",
   "main": "convert.js",
   "scripts": {
-    "deploy": "gh-pages -d dist1"
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
