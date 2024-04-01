@@ -481,7 +481,7 @@ var premiumApi = {
     let scopes = "data:read+data:write+bucket:read";
     let redirectUri = encodeURI("http://localhost:5500");
     window.open(
-      `https://developer.api.autodesk.com/authentication/v1/authorize` +
+      `https://developer.api.autodesk.com/authentication/v2/authorize` +
         `?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes}`,
       "_self"
     );
