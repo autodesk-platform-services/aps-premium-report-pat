@@ -46,6 +46,7 @@ var premiumApi = {
         headers: {
           Authorization: `Bearer ${premiumApi.access_token}`,
           "Content-Type": "application/json",
+          "ADSK-PAT": "75adb93fa9a8cf8211dfba451abb1cbe74aebcc0",
         },
       })
         .then((res) => res.text())
@@ -477,15 +478,29 @@ var premiumApi = {
   },
   logIn: function () {
     console.log("logIn");
-    let clientId = a;
-    let scopes = "data:read+data:write+bucket:read";
+    const clientId = "hQ5cK4QqBwwYOVk69IisloIZexpPeYA7";
+    const clientSecret = "MIzOII9ZHp7LFMnS";
     let redirectUri = encodeURI("http://localhost:5500");
-    window.open(
-      `https://developer.api.autodesk.com/authentication/v2/authorize` +
-        `?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes}`,
-      "_self"
-    );
+    const credentials = btoa(`${clientId}:${clientSecret}`);
+    const scopes = "data:read";
+
+    fetch("https://developer.api.autodesk.com/authentication/v2/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+        Authorization: `Basic ${credentials}`,
+      },
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+        scope: scopes,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error));
   },
+
   showInfo: function (text) {
     let logInButton = document.getElementById("Info");
     logInButton.value = text;
