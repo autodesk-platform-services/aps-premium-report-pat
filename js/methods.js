@@ -25,173 +25,176 @@ let specific_id = "";
 let specific_id1 = "";
 let specific_id2 = "";
 let specific_export = "";
+var token = "";
 var premiumApi = {
   access_token: "",
   LogIn: ["Log In", "Logged In"],
   onLoad: async function () {
-    var url = new URL(window.location.href.replace("#", "?"));
-    var query_string = url.search;
-    var search_params = new URLSearchParams(query_string);
-    premiumApi.access_token = search_params.get("access_token");
-    let logInButton = document.getElementById("LogIn");
-    logInButton.innerText = premiumApi.access_token
-      ? premiumApi.LogIn[1]
-      : premiumApi.LogIn[0];
-    console.log(premiumApi.access_token);
-    document.getElementById("GetUsageInformation").disabled = true;
-    document.getElementById("GetUsageInformation").textContent = "Loading";
-    setTimeout(() => {
-      if (premiumApi.access_token === "") return;
-      fetch("https://developer.api.autodesk.com/insights/v1/contexts", {
-        headers: {
-          Authorization: `Bearer ${premiumApi.access_token}`,
-          "Content-Type": "application/json",
-          "ADSK-PAT": "75adb93fa9a8cf8211dfba451abb1cbe74aebcc0",
-        },
-      })
-        .then((res) => res.text())
-        .then((data) => {
-          let json1 = JSON.parse(data);
-          context_id = (json1[0] || "").contextId;
-          console.log("context id is" + context_id);
-          let user_specific = {
-            fields: ["fullName", "productName"],
-            metrics: [
-              "earliestUsageDate",
-              "latestUsageDate",
-              "totalUniqueDays",
-            ],
-            where: "",
-            orderBy: "",
-            context: context_id,
-          };
-          setTimeout(() => {
-            if (premiumApi.access_token === "") return;
-            fetch(
-              "https://developer.api.autodesk.com/insights/v1/usage-queries?offset=0&limit=100&" +
-                context_id,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: `Bearer ${premiumApi.access_token}`,
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(user_specific),
-              }
-            )
-              .then((res) => res.text())
-              .then((data) => {
-                let json2 = JSON.parse(data);
-                console.log(json2);
-                specific_id = json2.id;
-                console.log("specific id is" + specific_id);
-                let user_specific1 = {
-                  fields: ["fullName", "productName", "childProductName"],
-                  metrics: [],
-                  where: "",
-                  orderBy: "",
-                };
-                setTimeout(() => {
-                  if (premiumApi.access_token === "") return;
-                  fetch(
-                    "https://developer.api.autodesk.com/insights/v1/usage-queries?offset=0&limit=100&" +
-                      context_id,
-                    {
-                      method: "POST",
-                      headers: {
-                        Authorization: `Bearer ${premiumApi.access_token}`,
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify(user_specific1),
-                    }
-                  )
-                    .then((res) => res.text())
-                    .then((data) => {
-                      let json2 = JSON.parse(data);
-                      console.log(json2);
-                      specific_id1 = json2.id;
-                      console.log("specific id is" + specific_id1);
-                      let user_specific2 = {
-                        fields: ["fullName", "productName"],
-                        metrics: ["totalUniqueDays", "uniqueProducts"],
-                        where: "",
-                        orderBy: "",
-                      };
-                      setTimeout(() => {
-                        if (premiumApi.access_token === "") return;
-                        fetch(
-                          "https://developer.api.autodesk.com/insights/v1/usage-queries?offset=0&limit=100&" +
-                            context_id,
-                          {
-                            method: "POST",
-                            headers: {
-                              Authorization: `Bearer ${premiumApi.access_token}`,
-                              "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(user_specific2),
-                          }
-                        )
-                          .then((res) => res.text())
-                          .then((data) => {
-                            let json2 = JSON.parse(data);
-                            console.log(json2);
-                            specific_id2 = json2.id;
-                            console.log("specific id is" + specific_id2);
+    this.logIn().then(() => {
+      access_token = token;
+      console.log("token is " + access_token);
+      document.getElementById("GetUsageInformation").disabled = true;
+      document.getElementById("GetUsageInformation").textContent = "Loading";
+      console.log(access_token);
+      setTimeout(() => {
+        if (access_token === "") return;
+        fetch("https://developer.api.autodesk.com/insights/v1/contexts", {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            "Content-Type": "application/json",
+            "ADSK-PAT": "",
+          },
+        })
+          .then((res) => res.text())
+          .then((data) => {
+            let json1 = JSON.parse(data);
+            context_id = (json1[0] || "").contextId;
+            console.log("context id is" + context_id);
+            let user_specific = {
+              fields: ["fullName", "productName"],
+              metrics: [
+                "earliestUsageDate",
+                "latestUsageDate",
+                "totalUniqueDays",
+              ],
+              where: "",
+              orderBy: "",
+              context: context_id,
+            };
+            setTimeout(() => {
+              if (access_token === "") return;
+              fetch(
+                "https://developer.api.autodesk.com/insights/v1/usage-queries?offset=0&limit=100&" +
+                  context_id,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${access_token}`,
+                    "Content-Type": "application/json",
+                    "ADSK-PAT": "",
+                  },
+                  body: JSON.stringify(user_specific),
+                }
+              )
+                .then((res) => res.text())
+                .then((data) => {
+                  let json2 = JSON.parse(data);
+                  console.log(json2);
+                  specific_id = json2.id;
+                  console.log("specific id is" + specific_id);
+                  let user_specific1 = {
+                    fields: ["fullName", "productName", "childProductName"],
+                    metrics: [],
+                    where: "",
+                    orderBy: "",
+                  };
+                  setTimeout(() => {
+                    if (access_token === "") return;
+                    fetch(
+                      "https://developer.api.autodesk.com/insights/v1/usage-queries?offset=0&limit=100&" +
+                        context_id,
+                      {
+                        method: "POST",
+                        headers: {
+                          Authorization: `Bearer ${access_token}`,
+                          "Content-Type": "application/json",
+                          "ADSK-PAT": "",
+                        },
+                        body: JSON.stringify(user_specific1),
+                      }
+                    )
+                      .then((res) => res.text())
+                      .then((data) => {
+                        let json2 = JSON.parse(data);
+                        console.log(json2);
+                        specific_id1 = json2.id;
+                        console.log("specific id is" + specific_id1);
+                        let user_specific2 = {
+                          fields: ["fullName", "productName"],
+                          metrics: ["totalUniqueDays", "uniqueProducts"],
+                          where: "",
+                          orderBy: "",
+                        };
+                        setTimeout(() => {
+                          if (access_token === "") return;
+                          fetch(
+                            "https://developer.api.autodesk.com/insights/v1/usage-queries?offset=0&limit=100&" +
+                              context_id,
+                            {
+                              method: "POST",
+                              headers: {
+                                Authorization: `Bearer ${access_token}`,
+                                "Content-Type": "application/json",
+                                "ADSK-PAT": "",
+                              },
+                              body: JSON.stringify(user_specific2),
+                            }
+                          )
+                            .then((res) => res.text())
+                            .then((data) => {
+                              let json2 = JSON.parse(data);
+                              console.log(json2);
+                              specific_id2 = json2.id;
+                              console.log("specific id is" + specific_id2);
 
-                            setTimeout(() => {
-                              let user_export = {
-                                outputFormat: "EXCEL",
-                                reports: ["SUBSCRIPTIONS"],
-                              };
-                              if (premiumApi.access_token === "") return;
-                              fetch(
-                                "https://developer.api.autodesk.com/insights/v1/exports",
-                                {
-                                  method: "POST",
-                                  headers: {
-                                    Authorization: `Bearer ${premiumApi.access_token}`,
-                                    "Content-Type": "application/json",
-                                  },
-                                  body: JSON.stringify(user_export),
-                                }
-                              )
-                                .then((res) => res.text())
-                                .then((data) => {
-                                  let json2 = JSON.parse(data);
-                                  console.log(json2);
-                                  specific_export = json2.id;
-                                  console.log(
-                                    "specific export is" + specific_export
-                                  );
+                              setTimeout(() => {
+                                let user_export = {
+                                  outputFormat: "EXCEL",
+                                  reports: ["SUBSCRIPTIONS"],
+                                };
+                                if (access_token === "") return;
+                                fetch(
+                                  "https://developer.api.autodesk.com/insights/v1/exports",
+                                  {
+                                    method: "POST",
+                                    headers: {
+                                      Authorization: `Bearer ${access_token}`,
+                                      "Content-Type": "application/json",
+                                      "ADSK-PAT": "",
+                                    },
+                                    body: JSON.stringify(user_export),
+                                  }
+                                )
+                                  .then((res) => res.text())
+                                  .then((data) => {
+                                    let json2 = JSON.parse(data);
+                                    console.log(json2);
+                                    specific_export = json2.id;
+                                    console.log(
+                                      "specific export is" + specific_export
+                                    );
 
-                                  document.getElementById(
-                                    "GetUsageInformation"
-                                  ).disabled = false;
-                                  document.getElementById(
-                                    "GetUsageInformation"
-                                  ).textContent = "Custom Usage Query API Data";
-                                });
-                            }, 1000);
-                          });
-                      }, 1000);
-                    });
-                }, 1000);
-              });
-          }, 1000);
-        });
-    }, 1000);
+                                    document.getElementById(
+                                      "GetUsageInformation"
+                                    ).disabled = false;
+                                    document.getElementById(
+                                      "GetUsageInformation"
+                                    ).textContent =
+                                      "Custom Usage Query API Data";
+                                  });
+                              }, 1000);
+                            });
+                        }, 1000);
+                      });
+                  }, 1000);
+                });
+            }, 1000);
+          });
+      }, 1000);
+    });
   },
   getusage: async function () {
     setTimeout(() => {
       console.log("Waited 5s");
-      if (premiumApi.access_token === "") return;
+      if (access_token === "") return;
       fetch(
         "https://developer.api.autodesk.com/insights/v1/usage-queries/" +
           specific_id,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${premiumApi.access_token}`,
+            "ADSK-PAT": "",
+            Authorization: `Bearer ${access_token}`,
           },
         }
       )
@@ -310,14 +313,15 @@ var premiumApi = {
           }
           document.getElementById("inactive").innerHTML = temp;
           setTimeout(() => {
-            if (premiumApi.access_token === "") return;
+            if (access_token === "") return;
             fetch(
               "https://developer.api.autodesk.com/insights/v1/usage-queries/" +
                 specific_id1,
               {
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: `Bearer ${premiumApi.access_token}`,
+                  "ADSK-PAT": "",
+                  Authorization: `Bearer ${access_token}`,
                 },
               }
             )
@@ -354,14 +358,15 @@ var premiumApi = {
                 }
                 document.getElementById("getData403").innerHTML = temp5;
                 setTimeout(() => {
-                  if (premiumApi.access_token === "") return;
+                  if (access_token === "") return;
                   fetch(
                     "https://developer.api.autodesk.com/insights/v1/usage-queries/" +
                       specific_id2,
                     {
                       headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${premiumApi.access_token}`,
+                        "ADSK-PAT": "",
+                        Authorization: `Bearer ${access_token}`,
                       },
                     }
                   )
@@ -420,13 +425,13 @@ var premiumApi = {
   viewallexport: async function () {
     document.getElementById("viewAllExport").disabled = true;
     document.getElementById("viewAllExport").textContent = "Loading";
-    if (premiumApi.access_token === "") return;
+    if (access_token === "") return;
     fetch(
       "https://developer.api.autodesk.com/insights/v1/exports/" +
         specific_export,
       {
         headers: {
-          Authorization: `Bearer ${premiumApi.access_token}`,
+          Authorization: `Bearer ${access_token}`,
         },
         outputFormat: "EXCEL",
         reports: ["USAGE", "USERS", "SUBSCRIPTIONS"],
@@ -476,15 +481,20 @@ var premiumApi = {
     document.getElementById("viewAllExport").textContent =
       "Download Export Usage Query API Data";
   },
+
+  showInfo: function (text) {
+    let logInButton = document.getElementById("Info");
+    logInButton.value = text;
+  },
   logIn: function () {
     console.log("logIn");
-    const clientId = "hQ5cK4QqBwwYOVk69IisloIZexpPeYA7";
-    const clientSecret = "MIzOII9ZHp7LFMnS";
-    let redirectUri = encodeURI("http://localhost:5500");
+    const clientId = "";
+    const clientSecret = "";
     const credentials = btoa(`${clientId}:${clientSecret}`);
     const scopes = "data:read";
 
-    fetch("https://developer.api.autodesk.com/authentication/v2/token", {
+    // Return the fetch promise
+    return fetch("https://developer.api.autodesk.com/authentication/v2/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -497,29 +507,10 @@ var premiumApi = {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        token = data.access_token;
+      })
       .catch((error) => console.error("Error:", error));
-  },
-
-  showInfo: function (text) {
-    let logInButton = document.getElementById("Info");
-    logInButton.value = text;
-  },
-  logOut: function () {
-    console.log("logOut");
-    if (premiumApi.access_token === "") return;
-    let url = "http://localhost:5500";
-    location.href = url;
-  },
-  client_id_value: function () {
-    a = prompt("Please enter client_id value");
-    try {
-      if (a != null) {
-        document.getElementById("para").innerHTML = a;
-        premiumApi.logIn();
-      }
-    } catch (err) {
-      document.getElementById("para1").innerHTML = err.name;
-    }
   },
 };
