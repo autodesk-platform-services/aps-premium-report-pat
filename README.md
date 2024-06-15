@@ -7,7 +7,7 @@
 
 The sample helps viewing, building custom reports and exporting usage query & export usage query API data in the form of tables, charts from Premium Reporting APIs.
 
-Uses 3-legged oAuth2 with implicit grant to authenticate with aps.
+Uses 2-legged oAuth2 with ADSK-PAT header which is a personal access token to authenticate with aps.
 
 ![thumbnail](thumbnail.PNG)
 
@@ -23,6 +23,8 @@ Uses 3-legged oAuth2 with implicit grant to authenticate with aps.
 
 - When logging into the web dashboard, you should login with the ID of an administrator with premium benefits (EBA).If you login with a user that does not have such roles, the API will return no data.
 
+- Get your personal access token token under security tab in your profile https://profile.autodesk.com/security
+
 ### Setup
 
 - Create a [Autodesk Platform Services app](https://forge-tutorials.autodesk.io/) with access to the Premium Reporting API.
@@ -33,25 +35,17 @@ Uses 3-legged oAuth2 with implicit grant to authenticate with aps.
 
 - Clone or download the folder. Open the folder inside in Visual Studio Code.
 
-- Use http://localhost:5500 as redirect URL in the js/method.js file.
+- Put http://localhost:5500 as redirect URL in the js/method.js file.
 
-- Click Go live to run live server.
+- Install live server extension inside vscode and then click on Go live at the bottom right corner of vscode.
 
-  ![1663191439013](golive.png)
+![1663191439013](golive.png)
 
 ### Meta Data Mapping
 
 - Save your metadata in the JSON format in the root folder.
 - Here is the sample of metadata.
 - Make changes as per your mapping in js/jsonToTable.js file.
-
-### Deployment
-
-The above sample is deployed on https://autodesk-platform-services.github.io/aps-premium-report/
-
-To deploy your changed code use GitHub pages. Follow this [tutorial](https://www.youtube.com/watch?v=SKXkC4SqtRk)
-
-Note- As soon as you deploy it the redirect URL becomes the deployment domain.
 
 ## Support
 

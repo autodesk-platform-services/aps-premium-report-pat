@@ -18,15 +18,15 @@
 document.getElementsByTagName("head")[0].innerHTML +=
   '<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>';
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-var a;
-var getusagebtn;
+let a;
+let getusagebtn;
 let context_id = "";
 let specific_id = "";
 let specific_id1 = "";
 let specific_id2 = "";
 let specific_export = "";
-var token = "";
-var premiumApi = {
+let token = "";
+let premiumApi = {
   access_token: "",
   LogIn: ["Log In", "Logged In"],
   onLoad: async function () {
@@ -37,7 +37,7 @@ var premiumApi = {
       document.getElementById("GetUsageInformation").textContent = "Loading";
       console.log(access_token);
       setTimeout(() => {
-        if (access_token === "") return;
+        if (access_token === "") return console.log("NO ACCESS TOKEN PROVIDED");
         fetch("https://developer.api.autodesk.com/insights/v1/contexts", {
           headers: {
             Authorization: `Bearer ${access_token}`,
@@ -99,6 +99,7 @@ var premiumApi = {
                           Authorization: `Bearer ${access_token}`,
                           "Content-Type": "application/json",
                           "ADSK-PAT": "",
+                          "Access-Control-Allow-Headers": "adsk-pat",
                         },
                         body: JSON.stringify(user_specific1),
                       }
@@ -432,6 +433,7 @@ var premiumApi = {
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
+          "ADSK-PAT": "",
         },
         outputFormat: "EXCEL",
         reports: ["USAGE", "USERS", "SUBSCRIPTIONS"],
