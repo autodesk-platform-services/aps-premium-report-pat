@@ -29,13 +29,11 @@ Uses 2-legged oAuth2 with ADSK-PAT header which is a personal access token to au
 
 - Create a [Autodesk Platform Services app](https://forge-tutorials.autodesk.io/) with access to the Premium Reporting API.
 
-- Take note of the Client ID which you need to enter as soon as you login.
-
-- Use http://localhost:5500 as redirect URL in aps App.
+- Take note of the Client ID and Client Secret which you need to put in logIn() function in methods.js file
 
 - Clone or download the folder. Open the folder inside in Visual Studio Code.
 
-- Put http://localhost:5500 as redirect URL in the js/method.js file.
+- Put http://localhost:5500 in the settings.json file under vscode folder
 
 - Install live server extension inside vscode and then click on Go live at the bottom right corner of vscode.
 
